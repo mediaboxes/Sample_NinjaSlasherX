@@ -1,0 +1,2 @@
+# Sample_NinjaSlasherX
+練習中　Unityではじめる2Dゲーム作り徹底ガイド スマートフォンでも遊べる本格ゲーム開発に挑戦

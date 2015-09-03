@@ -84,6 +84,21 @@ public class PlayerController :BaseCharacterController {
 		enemyActiveZonePointB = new Vector3(boxCol2D.offset.x + boxCol2D.size.x / 2.0f, boxCol2D.offset.y + boxCol2D.size.y / 2.0f);
 		boxCol2D.transform.gameObject.SetActive(false);
 	}
+	protected override void Start() {
+		base.Start();
+
+		seAnimationList = new AudioSource[8];
+		seAnimationList[0] = AppSound.instance.SE_ATK_A1;
+		seAnimationList[1] = AppSound.instance.SE_ATK_A2;
+		seAnimationList[2] = AppSound.instance.SE_ATK_A3;
+		seAnimationList[3] = AppSound.instance.SE_ATK_ARIAL;
+		seAnimationList[4] = AppSound.instance.SE_MOV_JUMP;
+
+		seAnimationList[5] = AppSound.instance.SE_HIT_A1;
+		seAnimationList[6] = AppSound.instance.SE_HIT_A2;
+		seAnimationList[7] = AppSound.instance.SE_HIT_A3;
+	}
+
 	protected override void FixedUpdateCharacter() {
 		//現在のステート
 		AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);

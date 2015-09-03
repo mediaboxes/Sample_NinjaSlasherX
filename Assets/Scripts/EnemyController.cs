@@ -38,6 +38,22 @@ public class EnemyController:BaseCharacterController {
 		hp = hpMax;
 		speed = initSpeed;
 	}
+	protected override void Start() {
+		base.Start();
+
+		seAnimationList = new AudioSource[8];
+		seAnimationList[0] = AppSound.instance.SE_ATK_B1;
+		seAnimationList[1] = AppSound.instance.SE_ATK_B2;
+		seAnimationList[2] = AppSound.instance.SE_ATK_B3;
+		seAnimationList[3] = AppSound.instance.SE_ATK_ARIAL;
+		seAnimationList[4] = AppSound.instance.SE_MOV_JUMP;
+
+		seAnimationList[5] = AppSound.instance.SE_HIT_B1;
+		seAnimationList[6] = AppSound.instance.SE_HIT_B2;
+		seAnimationList[7] = AppSound.instance.SE_HIT_B3;
+	}
+	
+
 	protected override void FixedUpdateCharacter() {
 		if(!cameraRendered) {
 			return;

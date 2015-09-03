@@ -35,6 +35,8 @@ public class BaseCharacterController:MonoBehaviour {
 	protected GameObject groundCheck_OnMoveObject;
 	protected GameObject groundCheck_OnEnemyObject;
 
+	protected AudioSource[] seAnimationList;
+
 
 	//コード(Monobehaviour)
 	protected virtual void Awake() {
@@ -110,6 +112,9 @@ public class BaseCharacterController:MonoBehaviour {
 	}
 	public void DisableSuperAromr() {
 		superArmor = false;
+	}
+	public virtual void PlayAnimetionSE(int i) {
+		seAnimationList[i].Play();
 	}
 
 	//コード（基本アクション）

@@ -116,6 +116,9 @@ public class BaseCharacterController:MonoBehaviour {
 	public virtual void PlayAnimetionSE(int i) {
 		seAnimationList[i].Play();
 	}
+	public virtual void PlayAnimetionSE2(string b) {
+		Debug.Log(b);
+	}
 
 	//コード（基本アクション）
 	public virtual void ActionMove(float n) {

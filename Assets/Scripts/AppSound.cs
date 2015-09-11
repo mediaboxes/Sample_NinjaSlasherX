@@ -165,7 +165,10 @@ public class AppSound:MonoBehaviour {
 		//シーンチェンジをチェック
 		if(sceneName != Application.loadedLevelName) {
 			sceneName = Application.loadedLevelName;
-			Debug.Log(sceneName);
+
+			//ボリューム設定
+			fm.SetVolume("BGM", SaveData.SoundBGMVolume);
+			fm.SetVolume("SE", SaveData.SoundSEVolume);
 
 			//BGM再生
 			if(sceneName == "Menu_Logo") {
@@ -174,7 +177,7 @@ public class AppSound:MonoBehaviour {
 				if(!BGM_TITLE.isPlaying) {
 					fm.Stop("BGM");
 					BGM_TITLE.Play();
-					fm.FadeInVolume(BGM_TITLE, 1.0f, 1.0f, true);
+					fm.FadeInVolume(BGM_TITLE, SaveData.SoundBGMVolume, 1.0f, true);
 				}
 			} else
 			if(sceneName == "Menu_Option" ||
@@ -184,7 +187,7 @@ public class AppSound:MonoBehaviour {
 			if(sceneName == "StageA") {
 				//fm.Stop ("BGM");
 				fm.FadeOutVolumeGroup("BGM", BGM_STAGEA, 0.0f, 1.0f, false);
-				fm.FadeInVolume(BGM_TITLE, 1.0f, 1.0f, true);
+				fm.FadeInVolume(BGM_TITLE, SaveData.SoundBGMVolume, 1.0f, true);
 				BGM_STAGEA.loop = true;
 				BGM_STAGEA.Play();
 			} else
@@ -212,7 +215,7 @@ public class AppSound:MonoBehaviour {
 			if(sceneName == "sample4_test") {//TESTSTAGE
 				//fm.Stop ("BGM");
 				fm.FadeOutVolumeGroup("BGM", BGM_STAGEA, 0.0f, 1.0f, false);
-				fm.FadeInVolume(BGM_TITLE, 1.0f, 1.0f, true);
+				fm.FadeInVolume(BGM_TITLE, SaveData.SoundBGMVolume, 1.0f, true);
 				BGM_STAGEA.loop = true;
 				BGM_STAGEA.Play();
 			} else {

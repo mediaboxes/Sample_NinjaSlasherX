@@ -27,7 +27,6 @@ public class PlayerMain:MonoBehaviour {
 			vpad_btnB = vpad.buttonB;
 		}
 
-
 		//移動
 		float joyMv = Input.GetAxis("Horizontal");
 		joyMv = Mathf.Pow(Mathf.Abs(joyMv), 3.0f) * Mathf.Sign(joyMv);

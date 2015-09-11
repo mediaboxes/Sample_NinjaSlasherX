@@ -18,6 +18,9 @@ public class PlayerController :BaseCharacterController {
 
 	[System.NonSerialized] public int comboCount = 0;
 
+	public static float startFadeTime = 0.5f;
+
+
 	//アニメーションのハッシュ名
 	public readonly static int ANISTS_Idle = Animator.StringToHash("Base Layer.Player_Idle");
 	public readonly static int ANISTS_Walk = Animator.StringToHash("Base Layer.Player_Walk");
@@ -83,9 +86,17 @@ public class PlayerController :BaseCharacterController {
 		enemyActiveZonePointA = new Vector3(boxCol2D.offset.x - boxCol2D.size.x / 2.0f, boxCol2D.offset.y - boxCol2D.size.y / 2.0f);
 		enemyActiveZonePointB = new Vector3(boxCol2D.offset.x + boxCol2D.size.x / 2.0f, boxCol2D.offset.y + boxCol2D.size.y / 2.0f);
 		boxCol2D.transform.gameObject.SetActive(false);
+
+		//コンティニューチェック////////////
+		//STAGEなしのためスキップ
+		//GameObject.Find("VRPad").SetActive(SaveData.VRPadEnabled);
+		GameObject.Find("VRPad").SetActive(true);
+
 	}
 	protected override void Start() {
 		base.Start();
+
+		zFoxFadeFilter.instance.FadeIn(Color.black, startFadeTime);
 
 		seAnimationList = new AudioSource[8];
 		seAnimationList[0] = AppSound.instance.SE_ATK_A1;
@@ -246,6 +257,10 @@ public class PlayerController :BaseCharacterController {
 	}
 
 	public void ActionDamage (float damage) {
+		if(SaveData.debug_Invicible) {
+			return;
+		}
+
 		if(!activeSts) {
 			return;
 		}
@@ -268,16 +283,39 @@ public class PlayerController :BaseCharacterController {
 			return;
 		}
 		base.Dead(gameOver);
+
+		zFoxFadeFilter.instance.FadeOut(Color.black, 2.0f);
+
 		SetHp(0, hpMax);
 		Invoke("GameOver", 3.0f);
 
 		GameObject.Find("HUD_Dead").GetComponent<MeshRenderer>().enabled = true;
 		GameObject.Find("HUD_DeadShadow").GetComponent<MeshRenderer>().enabled = true;
-    }
+		if(GameObject.Find("VRPad") != null) {
+			GameObject.Find("VRPad").SetActive(false);
+		}
+	}
 	public void GameOver() {
+		SaveData.SaveHiScore(score);
 		PlayerController.score = 0;
+
+		SaveData.SaveGamePlay();
+
+		AppSound.instance.fm.Stop("BGM");
+		if(SaveData.newRecord > 0) {
+			AppSound.instance.BGM_HISCORE_RANKIN.Play();
+		} else {
+			AppSound.instance.BGM_HISCORE.Play();
+		}
+
 		Application.LoadLevel(Application.loadedLevelName);
 	}
+
+	public void GameReset() {
+		SaveData.SaveGamePlay();
+		Application.LoadLevel(Application.loadedLevelName);
+	}
+
 	public override bool SetHp(float _hp, float _hpMax) {
 		if(_hp > _hpMax) {
 			_hp = _hpMax;
